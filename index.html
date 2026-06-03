@@ -43,21 +43,24 @@
 
         // Detectar columnas automáticamente
         const columnas = Object.keys(data[0]);
+
+        const colNacional = columnas.find(c => c.toLowerCase().includes("nacional"));
+        const colAutomann = columnas.find(c => c.toLowerCase().includes("automann"));
+        const colRotulo = columnas.find(c => c.toLowerCase().includes("rotulo") || c.toLowerCase().includes("rótulo"));
+        const colEtiqueta = columnas.find(c => c.toLowerCase().includes("etiqueta"));
         
-        const colNacional = columnas[0];
-        const colAutomann = columnas[1];
-        const colRotulo = columnas[2];
-        const colEtiqueta = columnas[3];
-        
-        // Guardarlas globales
         window.colNacional = colNacional;
         window.colAutomann = colAutomann;
         window.colRotulo = colRotulo;
         window.colEtiqueta = colEtiqueta;
         
-        console.log("Columnas detectadas:", columnas);
-
-
+        console.log("Mapeo FINAL:", {
+          colNacional,
+          colAutomann,
+          colRotulo,
+          colEtiqueta
+        });
+        
         console.log("✅ Datos cargados:", data);
 
         // ✅ Autocompletado
@@ -83,8 +86,9 @@
       const resultDiv = document.getElementById('result');
 
       const resultado = data.find(item =>
-  String(item[colNacional]).trim() === input
-);
+        String(item[colNacional]).trim().toUpperCase() === input.toUpperCase() ||
+        String(item[colAutomann]).trim().toUpperCase() === input.toUpperCase()
+      );
 
       if (resultado) {
 
