@@ -9,9 +9,12 @@
 <body>
 
   <h1>AMX</h1>
+  <img src="logo.png" alt="Automann" style="max-width:200px; margin-bottom:20px;">
 
-  <input list="numeros" id="searchInput" placeholder="Número Nacional">
-  <datalist id="numeros"></datalist>
+  <div class="container">
+    <input list="numeros" id="searchInput" placeholder="Número de Parte">
+    <button onclick="buscar()">Buscar</button>
+  </div>
 
   <button onclick="buscar()">Buscar</button>
 
@@ -28,8 +31,8 @@ async function cargarExcel() {
     const arrayBuffer = await response.arrayBuffer();
     const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-    // ⚠️ Usa el nombre de tu hoja
-    const sheet = workbook.Sheets["prod"];
+    //  Usa el nombre de tu hoja
+    const sheet = workbook.Sheets["Ayuda visual Rotulos"];
 
     const json = XLSX.utils.sheet_to_json(sheet);
 
@@ -42,7 +45,7 @@ async function cargarExcel() {
 
     data.forEach(item => {
       let option = document.createElement('option');
-      option.value = item["NO. PARTE"]; // ⚠️ columna real
+      option.value = item["Numero Nacional"]; //  columna real
       datalist.appendChild(option);
     });
 
