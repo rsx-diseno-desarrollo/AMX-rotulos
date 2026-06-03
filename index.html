@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>AMX - Buscador</title>
+</head>
+<body>
+
+  <h1>AMX</h1>
+
+  <input list="numeros" id="searchInput" placeholder="Número Nacional">
+  <datalist id="numeros"></datalist>
+
+  <button onclick="buscar()">Buscar</button>
+
+  <div id="result"></div>
+
+  <script>
+    let data = [];
+
+    // Cargar JSON
+    fetch('data.json')
+      .then(res => res.json())
+      .then(json => {
+        data = json;
+
+        // Autocomplete
+        const datalist = document.getElementById('numeros');
+        data.forEach(item => {
+          let option = document.createElement('option');
+          option.value = item.numero_nacional;
+          datalist.appendChild(option);
+        });
+      });
+
+    function buscar() {
+      const input = document.getElementById('searchInput').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      const resultado = data.find(item => item.numero_nacional === input);
+
+      if (resultado) {
+        resultDiv.innerHTML = `
+          <div class="card">
+            <h3>${resultado.numero_nacional}</h3>
+            <p><strong>Numero Automann:</strong> ${resultado.numero_automann}</p>
+            <p><strong>Rotulo:</strong> ${resultado.rotulo}</p>
+            <p><strong>Etiqueta:</strong> ${resultado.etiqueta}</p>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = "<p>No encontrado</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
