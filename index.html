@@ -17,37 +17,64 @@
 
   <div id="result"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <script>
     let data = [];
 
-    // Cargar JSON
-    fetch('data.json')
-      .then(res => res.json())
-      .then(json => {
-        data = json;
+// Cargar Excel
+async function cargarExcel() {
+  try {
+    const response = await fetch('specs.xlsx'); // tu archivo
+    const arrayBuffer = await response.arrayBuffer();
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-        // Autocomplete
-        const datalist = document.getElementById('numeros');
-        data.forEach(item => {
-          let option = document.createElement('option');
-          option.value = item.numero_nacional;
-          datalist.appendChild(option);
-        });
-      });
+    // ⚠️ Usa el nombre de tu hoja
+    const sheet = workbook.Sheets["prod"];
+
+    const json = XLSX.utils.sheet_to_json(sheet);
+
+    data = json;
+
+    console.log("Datos cargados:", data);
+
+    // Autocomplete
+    const datalist = document.getElementById('numeros');
+
+    data.forEach(item => {
+      let option = document.createElement('option');
+      option.value = item["NO. PARTE"]; // ⚠️ columna real
+      datalist.appendChild(option);
+    });
+
+  } catch (error) {
+    console.error("Error al cargar el Excel:", error);
+  }
+}
+
+// Ejecutar carga
+cargarExcel();
 
     function buscar() {
       const input = document.getElementById('searchInput').value.trim();
       const resultDiv = document.getElementById('result');
 
-      const resultado = data.find(item => item.numero_nacional === input);
+      const resultado = data.find(item =>
+  String(item["NO. PARTE"]).trim() === input
+);
 
       if (resultado) {
         resultDiv.innerHTML = `
           <div class="card">
-            <h3>${resultado.numero_nacional}</h3>
-            <p><strong>Numero Automann:</strong> ${resultado.numero_automann}</p>
-            <p><strong>Rotulo:</strong> ${resultado.rotulo}</p>
-            <p><strong>Etiqueta:</strong> ${resultado.etiqueta}</p>
+            <h3>${resultado["NO. PARTE"]}</h3>
+            <p><strong>Cliente:</strong> ${resultado["CLIENTE"]}</p>
+            <p><strong>Nombre:</strong> ${resultado["NOMBRE"]}</p>
+            <p><strong>Tipo:</strong> ${resultado["SUBCARPETA"]}</p>
+
+              ${resultado["LIGA"] 
+                ? `<p><a href="${resultado["LIGA"]}" target="_blank">Ver PDF</a></p>` 
+                : ""
+              }
+
           </div>
         `;
       } else {
