@@ -41,6 +41,23 @@
         const json = XLSX.utils.sheet_to_json(sheet);
         data = json;
 
+        // Detectar columnas automáticamente
+        const columnas = Object.keys(data[0]);
+        
+        const colNacional = columnas[0];
+        const colAutomann = columnas[1];
+        const colRotulo = columnas[2];
+        const colEtiqueta = columnas[3];
+        
+        // Guardarlas globales
+        window.colNacional = colNacional;
+        window.colAutomann = colAutomann;
+        window.colRotulo = colRotulo;
+        window.colEtiqueta = colEtiqueta;
+        
+        console.log("Columnas detectadas:", columnas);
+
+
         console.log("✅ Datos cargados:", data);
 
         // ✅ Autocompletado
@@ -48,7 +65,7 @@
 
         data.forEach(item => {
           let option = document.createElement('option');
-          option.value = item["Numero Nacional"];
+          option.value = item[colNacional];
           datalist.appendChild(option);
         });
 
@@ -66,19 +83,19 @@
       const resultDiv = document.getElementById('result');
 
       const resultado = data.find(item =>
-        String(item["Numero Nacional"]).trim() === input
-      );
+  String(item[colNacional]).trim() === input
+);
 
       if (resultado) {
 
         resultDiv.innerHTML = `
-          <div class="card">
-            <h3>${resultado["Numero Nacional"]}</h3>
-            <p><strong>Numero Automann:</strong> ${resultado["Numero Automann"]}</p>
-            <p><strong>Rótulo:</strong> ${resultado["Rotulo"]}</p>
-            <p><strong>Etiqueta:</strong> ${resultado["Etiqueta"]}</p>
-          </div>
-        `;
+  <div class="card">
+    <h3>${resultado[colNacional]}</h3>
+    <p><strong>Numero Automann:</strong> ${resultado[colAutomann]}</p>
+    <p><strong>Rotulo:</strong> ${resultado[colRotulo]}</p>
+    <p><strong>Etiqueta:</strong> ${resultado[colEtiqueta]}</p>
+  </div>
+`;
 
       } else {
         resultDiv.innerHTML = "<p>No encontrado</p>";
