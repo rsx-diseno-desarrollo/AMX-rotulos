@@ -24,7 +24,7 @@
 // Cargar Excel
 async function cargarExcel() {
   try {
-    const response = await fetch('specs.xlsx'); // tu archivo
+    const response = await fetch('QAD Automann MEX.xlsx'); // tu archivo
     const arrayBuffer = await response.arrayBuffer();
     const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
