@@ -1,37 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #F4F6F8;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      text-align: center;
-      padding: 30px;
-    }
+/* TITULO */
+h1 {
+  color: #1E73BE;
+  margin-bottom: 20px;
+}
 
-    h1 {
-      color: #0EC701;
-    }
+/* CONTENEDOR */
+.container {
+  max-width: 500px;
+  margin: auto;
+  width: 100%;
+}
 
-    input {
-      padding: 10px;
-      width: 250px;
-      font-size: 16px;
-    }
+/* INPUT */
+input {
+  padding: 12px;
+  width: 60%;
+  max-width: 250px;
+  font-size: 16px;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+}
 
-    button {
-      padding: 10px 15px;
-      margin-left: 10px;
-      background: #0EC701;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
+/* BOTON */
+button {
+  padding: 12px 15px;
+  margin-left: 8px;
+  background: #1E73BE;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
 
-    .card {
-      background: white;
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
+button:hover {
+  background: #0B4F9B;
+}
+
+/* TARJETA RESULTADO */
+.card {
+  background: white;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-align: left;
+}
+
+.card h3 {
+  color: #1E73BE;
+}
+
+/* LINKS */
+a {
+  color: #1E73BE;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #0B4F9B;
+}
+
+/*  RESPONSIVO */
+@media (max-width: 480px) {
+
+  input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .card {
+    width: 90%;
+    padding: 15px;
+  }
+}
+``
