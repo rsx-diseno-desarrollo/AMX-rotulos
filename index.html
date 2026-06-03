@@ -14,85 +14,86 @@
   <img src="logo.png" alt="Automann" style="max-width:200px; margin-bottom:20px;">
 
   <div class="container">
-    <input list="numeros" id="searchInput" placeholder="Número de Parte">
+    <input list="numeros" id="searchInput" placeholder="Número Nacional">
+    <datalist id="numeros"></datalist>
     <button onclick="buscar()">Buscar</button>
   </div>
 
-  <button onclick="buscar()">Buscar</button>
-
   <div id="result"></div>
 
+  <!-- Librería XLSX -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
   <script>
     let data = [];
 
-// Cargar Excel
-async function cargarExcel() {
-  try {
-    const response = await fetch('QAD Automann MEX.xlsx'); // tu archivo
-    const arrayBuffer = await response.arrayBuffer();
-    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    // ✅ Cargar Excel
+    async function cargarExcel() {
 
-    //  Usa el nombre de tu hoja
-    const sheet = workbook.Sheets["Ayuda visual Rotulos"];
+      try {
+        const response = await fetch('QAD Automann MEX.xlsx');
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-    const json = XLSX.utils.sheet_to_json(sheet);
+        // ✅ Tomar hoja correcta
+        const sheet = workbook.Sheets["Ayuda visual Rotulos"];
 
-    data = json;
+        const json = XLSX.utils.sheet_to_json(sheet);
+        data = json;
 
-    console.log("Datos cargados:", data);
+        console.log("✅ Datos cargados:", data);
 
-    // Autocomplete
-    const datalist = document.getElementById('numeros');
+        // ✅ Autocompletado
+        const datalist = document.getElementById('numeros');
 
-    data.forEach(item => {
-      let option = document.createElement('option');
-      option.value = item["Numero Nacional"]; //  columna real
-      datalist.appendChild(option);
-    });
+        data.forEach(item => {
+          let option = document.createElement('option');
+          option.value = item["Numero Nacional"];
+          datalist.appendChild(option);
+        });
 
-  } catch (error) {
-    console.error("Error al cargar el Excel:", error);
-  }
-}
+      } catch (error) {
+        console.error("❌ Error al cargar Excel:", error);
+      }
+    }
 
-// Ejecutar carga
-cargarExcel();
+    cargarExcel();
 
+    // ✅ Buscar
     function buscar() {
+
       const input = document.getElementById('searchInput').value.trim();
       const resultDiv = document.getElementById('result');
 
       const resultado = data.find(item =>
-  String(item["NO. PARTE"]).trim() === input
-);
+        String(item["Numero Nacional"]).trim() === input
+      );
 
       if (resultado) {
+
         resultDiv.innerHTML = `
           <div class="card">
-            <h3>${resultado["NO. PARTE"]}</h3>
-            <p><strong>Cliente:</strong> ${resultado["CLIENTE"]}</p>
-            <p><strong>Nombre:</strong> ${resultado["NOMBRE"]}</p>
-            <p><strong>Tipo:</strong> ${resultado["SUBCARPETA"]}</p>
-
-              ${resultado["LIGA"] 
-                ? `<p><a href="${resultado["LIGA"]}" target="_blank">Ver PDF</a></p>` 
-                : ""
-              }
-
+            <h3>${resultado["Numero Nacional"]}</h3>
+            <p><strong>Numero Automann:</strong> ${resultado["Numero Automann"]}</p>
+            <p><strong>Rótulo:</strong> ${resultado["Rotulo"]}</p>
+            <p><strong>Etiqueta:</strong> ${resultado["Etiqueta"]}</p>
           </div>
         `;
+
       } else {
         resultDiv.innerHTML = "<p>No encontrado</p>";
       }
     }
   </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(() => console.log("✅ Service Worker registrado"))
-      .catch(err => console.log("❌ Error SW", err));
-  }
-</script>
+
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("✅ Service Worker registrado"))
+        .catch(err => console.log("❌ Error SW", err));
+    }
+  </script>
+
 </body>
 </html>
