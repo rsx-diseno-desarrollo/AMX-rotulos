@@ -103,9 +103,9 @@
           <p><strong>Etiqueta:</strong> ${resultado[colEtiqueta]}</p>
         </div>
     
-          ${resultado[colRotulo] ? `
+          ${resultado[colRotulo] ? `          
             <div class="visual">
-              <img src="img/apoyo-visual.png">
+              <img src="img/apoyo-visual.png" onclick="abrirImagen(this.src)">
             </div>
           ` : ""}
       `;
@@ -114,6 +114,18 @@
         resultDiv.innerHTML = "<p>No encontrado</p>";
       }
     }
+
+    function abrirImagen(src) {
+    const visor = document.getElementById("visor");
+    const visorImg = document.getElementById("visorImg");
+  
+    visor.style.display = "flex";
+    visorImg.src = src;
+  }
+  
+  function cerrarImagen() {
+    document.getElementById("visor").style.display = "none";
+  }
   </script>
 
   <!-- Service Worker -->
@@ -124,6 +136,10 @@
         .catch(err => console.log("❌ Error SW", err));
     }
   </script>
+
+  <div id="visor" onclick="cerrarImagen()">
+  <img id="visorImg">
+  </div>
 
 </body>
 </html>
