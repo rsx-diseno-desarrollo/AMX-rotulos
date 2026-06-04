@@ -123,7 +123,7 @@ a:hover {
 #visor img {
   max-width: 95%;
   max-height: 90%;
-  border-radius: 10px;
+  object-fit: contain;
 }
 
 /* Cursor */
@@ -138,4 +138,9 @@ a:hover {
 
 body.modal-activo {
   overflow: hidden;
+}
+
+
+body.modal-activo .visual {
+  visibility: hidden;
 }
