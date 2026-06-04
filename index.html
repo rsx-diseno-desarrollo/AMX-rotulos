@@ -85,6 +85,11 @@
     // ✅ Buscar
     function buscar() {
 
+      if (!data.length) {
+          alert("La información aún no se ha cargado");
+          return;
+        }
+      
       const input = document.getElementById('searchInput').value.trim();
       const resultDiv = document.getElementById('result');
 
@@ -116,16 +121,20 @@
     }
 
     function abrirImagen(src) {
-    const visor = document.getElementById("visor");
-    const visorImg = document.getElementById("visorImg");
-  
-    visor.style.display = "flex";
-    visorImg.src = src;
-  }
-  
-  function cerrarImagen() {
-    document.getElementById("visor").style.display = "none";
-  }
+      const visor = document.getElementById("visor");
+      const visorImg = document.getElementById("visorImg");
+    
+      visor.style.display = "flex";
+      visorImg.src = src;
+    
+      document.body.classList.add("modal-activo");
+    }
+    
+    function cerrarImagen() {
+      document.getElementById("visor").style.display = "none";
+      document.body.classList.remove("modal-activo");
+    }
+
   </script>
 
   <!-- Service Worker -->
@@ -138,7 +147,7 @@
   </script>
 
   <div id="visor" onclick="cerrarImagen()">
-  <img id="visorImg">
+  <img id="visorImg" onclick="event.stopPropagation()">
   </div>
 
 </body>
