@@ -1,6 +1,6 @@
 {
   "name": "AMX - Buscador Automann",
-  "short_name": "AMX",
+  "short_name": "AMX-Buscador",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#F4F6F8",
