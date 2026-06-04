@@ -96,13 +96,19 @@
       if (resultado) {
 
         resultDiv.innerHTML = `
-  <div class="card">
-    <h3>${resultado[colNacional]}</h3>
-    <p><strong>Numero Automann:</strong> ${resultado[colAutomann]}</p>
-    <p><strong>Rotulo:</strong> ${resultado[colRotulo]}</p>
-    <p><strong>Etiqueta:</strong> ${resultado[colEtiqueta]}</p>
-  </div>
-`;
+        <div class="card">
+          <h3>${resultado[colNacional]}</h3>
+          <p><strong>Numero Automann:</strong> ${resultado[colAutomann]}</p>
+          <p><strong>Rotulo:</strong> ${resultado[colRotulo]}</p>
+          <p><strong>Etiqueta:</strong> ${resultado[colEtiqueta]}</p>
+        </div>
+    
+          ${resultado[colRotulo] ? `
+            <div class="visual">
+              <img src="img/apoyo-visual.png">
+            </div>
+          ` : ""}
+      `;
 
       } else {
         resultDiv.innerHTML = "<p>No encontrado</p>";
